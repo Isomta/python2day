@@ -25,9 +25,9 @@ def get_pagination(soup) -> int:
 def get_data(cart):
     new_price = int(
         cart.find("span", class_="price-val").find("span").text.replace(" ", ""))
-
     old_price = int(e.text.replace(" ", "")) if (e := cart.find(
         "span", class_="price-old")) is not None else new_price
+
     if old_price - new_price > 1:
         prefix = "https://www.labirint.ru"
         print(cart.find("span", class_="product-title").text)
@@ -70,4 +70,7 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    response = requests.get(url=url.format(page=1)).json
+    with open("index.json", "w") as file:
+        file.write(response)
+    # main()
